@@ -1,4 +1,5 @@
 [project]
+site_url = "https://shekharrajak.github.io/log4j-notes/"
 site_name = "Log4j Notes"
 site_description = "Learn Log4j through mental models, examples, and source code."
 nav = [
