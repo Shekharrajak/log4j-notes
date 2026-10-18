@@ -1,0 +1,41 @@
+[project]
+site_name = "Log4j Notes"
+site_description = "Learn Log4j through mental models, examples, and source code."
+nav = [
+  { "Start here" = "index.md" },
+  { "Fundamentals" = [
+    { "Mental model" = "fundamentals/mental-model.md" },
+    { "Public API" = "fundamentals/public-api.md" },
+    { "Why SLF4J exists" = "fundamentals/why-slf4j.md" },
+  ] },
+  { "Architecture" = [
+    { "One logging call" = "architecture/logging-call.md" },
+  ] },
+]
+extra_css = ["stylesheets/extra.css"]
+
+[project.theme]
+language = "en"
+features = ["navigation.tabs", "navigation.sections", "navigation.footer", "navigation.top", "content.code.copy", "search.highlight"]
+font = false
+
+[[project.theme.palette]]
+scheme = "default"
+primary = "indigo"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "indigo"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to light mode"
+
+[project.markdown_extensions]
+admonition = {}
+pymdownx.details = {}
+pymdownx.highlight = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+toc.permalink = true

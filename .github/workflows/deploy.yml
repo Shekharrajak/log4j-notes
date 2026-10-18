@@ -1,0 +1,54 @@
+name: Deploy notes
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.config.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.10.7'
+      - run: uv sync --frozen
+      - run: uv run zensical build --strict
+      - id: config
+        run: |
+          python - <<'PYTHON'
+          import os
+          import tomllib
+          with open("zensical.toml", "rb") as source:
+              url = tomllib.load(source)["project"].get("site_url", "")
+          enabled = url.startswith("https://")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write(f"publish={str(enabled).lower()}\n")
+          PYTHON
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.config.outputs.publish == 'true'
+        with:
+          path: site
+  deploy:
+    if: needs.build.outputs.publish == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

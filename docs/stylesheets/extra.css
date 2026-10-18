@@ -1,0 +1,14 @@
+@font-face {
+  font-family: Ubuntu;
+  src: url("../assets/fonts/Ubuntu-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Ubuntu;
+  src: url("../assets/fonts/Ubuntu-Medium.woff2") format("woff2");
+  font-weight: 500 700;
+  font-display: swap;
+}
+:root { --md-text-font: Ubuntu, Arial, sans-serif; }
+.mermaid { background: #fff; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; }
